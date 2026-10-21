@@ -17,34 +17,38 @@ public class PedidoDao implements AdministradorConexiones, Dao<Pedido, Integer> 
     private final String SQL_GETALL = "SELECT * FROM pedidos";
     private final String SQL_GETBY_ID = "SELECT * FROM pedidos WHERE idPedido=?";
     private final String SQL_DELETE_BY_ID = "DELETE FROM pedidos WHERE idPedido=?";
-    private final String SQL_INSERT = "INSERT INTO pedidos (idUsuario, fecha, total) VALUES (?, ?, ?)";
-    private final String SQL_UPDATE = "UPDATE pedidos SET idUsuario=?, fecha=?, total=? WHERE idPedido=?";
+    private final String SQL_INSERT = "INSERT INTO pedidos (idUsuario, fecha, estado) VALUES (?, ?, ?)";
+    private final String SQL_UPDATE = "UPDATE pedidos SET idUsuario=?, fecha=?, estado=? WHERE idPedido=?";
 
 
     @Override
     public List<Pedido> getAll() {
-        List<Usuario> lista = new ArrayList<>();
+        List<Pedido> lista = new ArrayList<>();
 
-        try{
+        try {
             Connection conn = this.obtenerConexion();
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery(SQL_GETALL);
 
-            while (rs.next()){
+            while (rs.next()) {
                 Pedido pedido = new Pedido();
                 pedido.setIdPedido(rs.getInt("idPedido"));
-                pedido.setUsuario(rs.getString("usuario"));
+
+                Usuario usuario = new Usuario();
+                usuario.setIdUsuario(rs.getInt("idUsuario"));
+                pedido.setUsuario(usuario);
+
                 pedido.setEstado(rs.getString("estado"));
                 pedido.setFecha(rs.getString("fecha"));
 
                 lista.add(pedido);
-
-                //cierro
-                rs.close();
-                st.close();
-                conn.close();
             }
-        } catch (Exception e){
+
+            //cierro
+            rs.close();
+            st.close();
+            conn.close();
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
@@ -54,17 +58,21 @@ public class PedidoDao implements AdministradorConexiones, Dao<Pedido, Integer> 
     @Override
     public Pedido getById(Integer id) {
 
-        try{
+        try {
             Connection conn = this.obtenerConexion();
             PreparedStatement pst = conn.prepareStatement(SQL_GETBY_ID);
-            pst.setInt(1,id);
+            pst.setInt(1, id);
 
             ResultSet rs = pst.executeQuery();
             Pedido pedido = new Pedido();
 
-            if (rs.next()){
+            if (rs.next()) {
                 pedido.setIdPedido(rs.getInt("idPedido"));
-                pedido.setUsuario(rs.getString("usuario"));
+
+                Usuario usuario = new Usuario();
+                usuario.setIdUsuario(rs.getInt("idUsuario"));
+                pedido.setUsuario(usuario);
+
                 pedido.setEstado(rs.getString("estado"));
                 pedido.setFecha(rs.getString("fecha"));
             }
@@ -82,14 +90,14 @@ public class PedidoDao implements AdministradorConexiones, Dao<Pedido, Integer> 
 
     @Override
     public void insert(Pedido objeto) {
-        try{
+        try {
             Connection conn = this.obtenerConexion();
             PreparedStatement pst = conn.prepareStatement(SQL_INSERT);
-            pst.setInt(1, objeto.getUsuario().getId());
+            pst.setInt(1, objeto.getUsuario().getIdUsuario());
             pst.setString(2, objeto.getFecha());
             pst.setString(3, objeto.getEstado());
 
-            pst.executeQuery();
+            pst.executeUpdate();
 
             //cierro
             pst.close();
@@ -101,58 +109,54 @@ public class PedidoDao implements AdministradorConexiones, Dao<Pedido, Integer> 
 
     @Override
     public void update(Pedido objeto) {
-        try{
+        try {
             Connection conn = this.obtenerConexion();
             PreparedStatement pst = conn.prepareStatement(SQL_UPDATE);
-            pst.setInt(1, objeto.getUsuario().getId());
+            pst.setInt(1, objeto.getUsuario().getIdUsuario());
             pst.setString(2, objeto.getFecha());
             pst.setString(3, objeto.getEstado());
             pst.setInt(4, objeto.getIdPedido());
 
             pst.executeUpdate();
 
-            //Cierro
+            //cierro
             pst.close();
             conn.close();
 
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
     }
 
     @Override
     public boolean delete(Integer id) {
         boolean elimino = false;
-        if (!this.exists(id)){
+        if (!this.exists(id)) {
             return elimino;
-        }else {
-
-            try {
-                Connection conn = this.obtenerConexion();
-                PreparedStatement pst = conn.prepareStatement(SQL_DELETE_BY_ID);
-                pst.setInt(1, id);
-                pst.execute();
-
-                //cierro
-                pst.close();
-                conn.close();
-
-                elimino = true;
-
-            } catch (Exception e) {
-                elimino = true;
-                throw new RuntimeException(e);
-            }
         }
-        return false;
+
+        try {
+            Connection conn = this.obtenerConexion();
+            PreparedStatement pst = conn.prepareStatement(SQL_DELETE_BY_ID);
+            pst.setInt(1, id);
+            pst.execute();
+
+            //cierro
+            pst.close();
+            conn.close();
+
+            elimino = true;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return elimino;
     }
 
     @Override
     public boolean exists(Integer id) {
         boolean existe = false;
 
-        try{
+        try {
             Connection conn = this.obtenerConexion();
             PreparedStatement pst = conn.prepareStatement(SQL_GETBY_ID);
             pst.setInt(1, id);
@@ -167,7 +171,7 @@ public class PedidoDao implements AdministradorConexiones, Dao<Pedido, Integer> 
             pst.close();
             conn.close();
 
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
         return existe;

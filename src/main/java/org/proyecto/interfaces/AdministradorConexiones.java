@@ -8,7 +8,7 @@ public interface AdministradorConexiones {
 
     public default Connection obtenerConexion(){
         String dbDriver="com.mysql.cj.jdbc.Driver";
-        String dbCadenaConexion="jdbc:mysql://localhost:3306/progiempleados";
+        String dbCadenaConexion="jdbc:mysql://localhost:3306/crochet";
         String dbUsuario="root";
         String dbPassword="root";
 

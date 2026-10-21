@@ -40,7 +40,7 @@ public class ProductosServlet extends HttpServlet {
                 req.setAttribute("lista", lista);
 
                 //Envio con el distpacher
-                rd = req.getRequestDispatcher("listado-productos.jsp");
+                rd = req.getRequestDispatcher("listaProductos.jsp");
 
                 try {
                     rd.forward(req, res); //redirijo al listado-productos.jsp
@@ -57,8 +57,8 @@ public class ProductosServlet extends HttpServlet {
                 }
                 break;
             case "editar":
-                String strId = req.getParameter("id");
-                int idProducto = Integer.parseInt(strId);
+                String strIdProducto = req.getParameter("idProducto");
+                int idProducto = Integer.parseInt(strIdProducto);
 
                 //BUsco x ide si existe el producto en la base de datos
                 Producto producto = productoDao.getById(idProducto);
@@ -80,7 +80,7 @@ public class ProductosServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse res) {
         //Se encarga de guardar uno nuevo o actualizar uno existente
-        String strId = req.getParameter("txtId");
+        String strIdProducto = req.getParameter("txtIdProducto");
         String strNombre = req.getParameter("txtNombre");
         String strPrecio = req.getParameter("txtPrecio");
         String strDescripcion = req.getParameter("txtDescripcion");
@@ -103,11 +103,11 @@ public class ProductosServlet extends HttpServlet {
         //}
 
         //Guardo
-        if (strId == null || strId.isEmpty()) {
+        if (strIdProducto == null || strIdProducto.isEmpty()) {
             //es nuevo producto
             productoDao.insert(producto);
         } else {
-            producto.setIdProducto(Integer.parseInt(strId));
+            producto.setIdProducto(Integer.parseInt(strIdProducto));
             productoDao.update(producto);
         }
 
