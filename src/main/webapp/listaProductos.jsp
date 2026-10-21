@@ -1,4 +1,4 @@
-<%@ page isELIgnored="false" %> .
+<%@ page isELIgnored="false" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java"%>
 
@@ -8,7 +8,7 @@
 
 <h1 Productos </h1>
 
-<c:if test="${!empty sessionScope.usuario}">
+<!-- <c:if test="${!empty sessionScope.usuario}"> -->
     <table>
         <thead>
         <th>Nombre</th>
@@ -44,6 +44,6 @@
     </table>
     <a href="${pageContext.request.contextPath}/productos?accion=nuevo">Agregar Empleado</a>
 
-</c:if>
+<!--</c:if> -->
 
 <jsp:include page = "footer.jsp"/>

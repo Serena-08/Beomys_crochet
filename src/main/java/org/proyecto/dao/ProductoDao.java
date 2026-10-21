@@ -38,11 +38,12 @@ public class    ProductoDao implements AdministradorConexiones, Dao<Producto, In
 
                 lista.add(producto);
 
-                //Cierro
-                rs.close();
-                st.close();
-                conn.close();
+
             }
+            //Cierro
+            rs.close();
+            st.close();
+            conn.close();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

@@ -9,7 +9,8 @@
 <h1>${not empty producto? 'Editando Producto' : 'Agregando Nuevo Producto'}</h1>
 
 <div class="container" style="margin: auto;">
-    <form method="get" action="${pageContext.request.contextPath}/productos">">
+
+    <form method="post" action="${pageContext.request.contextPath}/productos"> <!-- tenia un ">" demas -->
 
         <!-- hidden es control oculto para visualizacion-->
 
