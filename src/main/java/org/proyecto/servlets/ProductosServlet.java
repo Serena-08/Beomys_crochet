@@ -30,6 +30,7 @@ public class ProductosServlet extends HttpServlet {
             accion = "listar";
         }
 
+
         RequestDispatcher rd = null;
         switch (accion) {
             case "listar":
@@ -49,7 +50,7 @@ public class ProductosServlet extends HttpServlet {
                 }
                 break;
             case "nuevo":
-                rd = req.getRequestDispatcher("formulario-producto.jsp");
+                rd = req.getRequestDispatcher("formulario-Productos.jsp");
                 try {
                     rd.forward(req, res); //redirijo a formulario-producto.jsp
                 } catch (Exception e) {
@@ -58,16 +59,29 @@ public class ProductosServlet extends HttpServlet {
                 break;
             case "editar":
                 String strIdProducto = req.getParameter("idProducto");
-                int idProducto = Integer.parseInt(strIdProducto);
+                int idProducto = Integer.parseInt(strIdProducto); //Convierte a entero
 
-                //BUsco x ide si existe el producto en la base de datos
-                Producto producto = productoDao.getById(idProducto);
+                //Busco x id si existe el producto en la base de datos
+                Producto productoEditar = productoDao.getById(idProducto);
 
                 //tengo que pasar el producto al formulario para que muestre sus datos
-                req.setAttribute("producto", producto);//Seteo el atributo para el formulario
-                rd = req.getRequestDispatcher("formulario-producto.jsp");
+                req.setAttribute("producto", productoEditar);
+
                 try {
+                    rd = req.getRequestDispatcher("formulario-Productos.jsp"); //Pasa la peticion a otra pagina dentro del servidor
                     rd.forward(req, res); //redirijo a formulario-producto.jsp
+                } catch (Exception e) {
+                    System.out.println(e.getMessage() + " " + e.getCause());
+                }
+                break;
+            case "borrar":
+                strIdProducto = req.getParameter("idProducto");
+                idProducto = Integer.parseInt(strIdProducto);
+                productoDao.delete(idProducto);
+
+                // Redirijo al servlet para que cargue la lista actualizada
+                try {
+                    res.sendRedirect(req.getContextPath() + "/productos");
                 } catch (Exception e) {
                     System.out.println("No se pudo abrir el formulario");
                 }
@@ -98,9 +112,12 @@ public class ProductosServlet extends HttpServlet {
             producto.setPrecio(Double.parseDouble(strPrecio));
         }
 
-        //if (strUrlImagen != null && !strUrlImagen.isEmpty()) {
-        //  producto.setUrlImagen(strUrlImagen);
-        //}
+        if (strUrlImagen != null && !strUrlImagen.isEmpty()) {
+            producto.setUrlImagen(strUrlImagen);
+        }
+        if (strUrlML != null && !strUrlML.isEmpty()) {
+            producto.setUrlML(strUrlML);
+        }
 
         //Guardo
         if (strIdProducto == null || strIdProducto.isEmpty()) {

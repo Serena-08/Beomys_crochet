@@ -37,8 +37,6 @@ public class    ProductoDao implements AdministradorConexiones, Dao<Producto, In
                 producto.setUrlML(rs.getString("urlML"));
 
                 lista.add(producto);
-
-
             }
             //Cierro
             rs.close();
