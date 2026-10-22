@@ -10,7 +10,8 @@ import java.util.List;
 
 public class    ProductoDao implements AdministradorConexiones, Dao<Producto, Integer> {
 
-    private final String SQL_GETALL = "SELECT * FROM productos";
+    private final String SQL_GETALL = "SELECT * FROM productos ORDER BY 1 DESC";
+    private final String SQL_GETBY_CATEGORIA = "SELECT * FROM productos WHERE idCategoria=?";
 
     private final String SQL_GETBY_ID = "SELECT * FROM productos WHERE idProducto=?";
     private final String SQL_DELETE_BY_ID = "DELETE FROM productos WHERE idProducto=?";
