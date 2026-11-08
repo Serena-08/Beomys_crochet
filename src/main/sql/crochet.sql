@@ -13,7 +13,6 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS productos_por_pedido, pedidos, productos, categorias, usuarios, roles;
 SET FOREIGN_KEY_CHECKS = 1;
 
--- -----------------------------------------------------
 -- Tablas
 -- -----------------------------------------------------
 CREATE TABLE roles (
