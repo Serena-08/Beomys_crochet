@@ -1,11 +1,13 @@
 package org.proyecto.entities;
 
+import java.util.List;
+
 public class Pedido {
     private int idPedido;
     private Usuario usuario;
     private String estado;
     private String fecha;
-
+    List<Item> items;
 
     public Pedido() {
         usuario = new Usuario();

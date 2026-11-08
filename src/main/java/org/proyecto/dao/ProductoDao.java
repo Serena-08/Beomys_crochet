@@ -92,7 +92,6 @@ public class    ProductoDao implements AdministradorConexiones, Dao<Producto, In
             pst.setString(3, objeto.getDescripcion());
             pst.setString(4, objeto.getUrlImagen());
             pst.setString(5, objeto.getUrlML());
-
             pst.executeUpdate();
 
             //Cierro
@@ -149,7 +148,7 @@ public class    ProductoDao implements AdministradorConexiones, Dao<Producto, In
                 throw new RuntimeException(e);
             }
         }
-        return false;
+        return elimino;
     }
 
     @Override

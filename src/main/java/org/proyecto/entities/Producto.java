@@ -7,11 +7,22 @@ public class Producto {
     private String descripcion;
     private String urlImagen;
     private String urlML;
+    private Categoria categoria;
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
 
     public Producto() {
+        categoria=new Categoria();
     }
 
     public Producto(int idProducto, String nombre, double precio, String descripcion, String urlImagen, String urlML) {
+
         this.idProducto = idProducto;
         this.nombre = nombre;
         this.precio = precio;

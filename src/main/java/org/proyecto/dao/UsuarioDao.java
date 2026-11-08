@@ -40,7 +40,7 @@ public class UsuarioDao implements AdministradorConexiones, Dao<Usuario, Integer
             // si encontro el usuario el resulset tiene una fila
             if (rs.next()) {
                 usuario = new Usuario();
-                //usuario.setId(rs.getInt("idUsuario"));
+                usuario.setIdUsuario(rs.getInt("idUsuario"));
                 usuario.setNombre(rs.getString("nombre"));
                 usuario.setClave(rs.getString("clave"));
             }
@@ -120,7 +120,7 @@ public class UsuarioDao implements AdministradorConexiones, Dao<Usuario, Integer
 
             ResultSet rs = pst.getGeneratedKeys();
             if (rs.next()) {
-                //objeto.setId(rs.getInt(1)); // le asigno al objeto el id que le puso la bd
+                objeto.setIdUsuario(rs.getInt(1)); // le asigno al objeto el id que le puso la bd
             }
 
             // cierro
@@ -140,7 +140,7 @@ public class UsuarioDao implements AdministradorConexiones, Dao<Usuario, Integer
             PreparedStatement pst = conn.prepareStatement(SQL_UPDATE);
             pst.setString(1, objeto.getNombre());
             pst.setString(2, objeto.getClave());
-            // pst.setInt(3, objeto.getId());
+            pst.setInt(3, objeto.getIdUsuario());
             // ejecuto
             pst.executeUpdate();
             // cierro

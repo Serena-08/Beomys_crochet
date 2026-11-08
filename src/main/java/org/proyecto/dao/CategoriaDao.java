@@ -31,12 +31,11 @@ public class CategoriaDao implements AdministradorConexiones, Dao<Categoria, Int
                 categoria.setCategoria(rs.getString("categoria"));
 
                 lista.add(categoria);
-
-                //cierro
-                rs.close();
-                st.close();
-                conn.close();
             }
+            //cierro
+            rs.close();
+            st.close();
+            conn.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -110,9 +109,9 @@ public class CategoriaDao implements AdministradorConexiones, Dao<Categoria, Int
 
     @Override
     public boolean delete(Integer id) {
-        boolean elemino = false;
+        boolean elimino = false;
         if(!this.exists(id)){
-            return elemino;
+            return elimino;
         } else {
             try {
                 Connection conn = this.obtenerConexion();
@@ -123,13 +122,13 @@ public class CategoriaDao implements AdministradorConexiones, Dao<Categoria, Int
                 //cierro
                 pst.close();
                 conn.close();
-                elemino = true;
+                elimino = true;
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
         }
 
-        return false;
+        return elimino;
     }
 
     @Override

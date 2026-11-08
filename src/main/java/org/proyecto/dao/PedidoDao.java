@@ -17,8 +17,8 @@ public class PedidoDao implements AdministradorConexiones, Dao<Pedido, Integer> 
     private final String SQL_GETALL = "SELECT * FROM pedidos";
     private final String SQL_GETBY_ID = "SELECT * FROM pedidos WHERE idPedido=?";
     private final String SQL_DELETE_BY_ID = "DELETE FROM pedidos WHERE idPedido=?";
-    private final String SQL_INSERT = "INSERT INTO pedidos (idUsuario, fecha, estado) VALUES (?, ?, ?)";
-    private final String SQL_UPDATE = "UPDATE pedidos SET idUsuario=?, fecha=?, estado=? WHERE idPedido=?";
+    private final String SQL_INSERT = "INSERT INTO pedidos (idUsuario, fechaPedido, estado) VALUES (?, ?, ?)";
+    private final String SQL_UPDATE = "UPDATE pedidos SET idUsuario=?, fechaPedido=?, estado=? WHERE idPedido=?";
 
 
     @Override
@@ -39,7 +39,7 @@ public class PedidoDao implements AdministradorConexiones, Dao<Pedido, Integer> 
                 pedido.setUsuario(usuario);
 
                 pedido.setEstado(rs.getString("estado"));
-                pedido.setFecha(rs.getString("fecha"));
+                pedido.setFecha(rs.getString("fechaPedido"));
 
                 lista.add(pedido);
             }
@@ -74,7 +74,7 @@ public class PedidoDao implements AdministradorConexiones, Dao<Pedido, Integer> 
                 pedido.setUsuario(usuario);
 
                 pedido.setEstado(rs.getString("estado"));
-                pedido.setFecha(rs.getString("fecha"));
+                pedido.setFecha(rs.getString("fechaPedido"));
             }
 
             //cierro
