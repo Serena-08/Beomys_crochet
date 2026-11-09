@@ -21,7 +21,7 @@ public class UsuarioDao implements AdministradorConexiones, Dao<Usuario, Integer
     private final String SQL_INSERT = "INSERT INTO usuarios (nombre, apellido, correo, clave) VALUES (?, ?, ?, ?)";
     private final String SQL_UPDATE = "UPDATE usuarios SET nombre=?, clave=? WHERE idUsuario=?";
     // consulta para el login: busca por nombre y clave
-    private final String SQL_LOGIN = "SELECT * FROM usuarios WHERE nombre=?";
+    private final String SQL_LOGIN = "SELECT u.*, r.nombre AS rol FROM usuarios u JOIN roles r ON r.idRol = u.idRol WHERE u.nombre=?";
     private final String SQL_EXISTE_NOMBRE_O_CORREO = "SELECT idUsuario FROM usuarios WHERE nombre=? OR correo=?";
 
     public Usuario getByNombreYClave(String nombre, String clave) {
@@ -43,6 +43,7 @@ public class UsuarioDao implements AdministradorConexiones, Dao<Usuario, Integer
                     usuario = new Usuario();
                     usuario.setIdUsuario(rs.getInt("idUsuario"));
                     usuario.setNombre(rs.getString("nombre"));
+                    usuario.setRol(rs.getString("rol"));
                     // la clave no se copia al objeto, así no queda guardada en la sesión
                 }
             }
@@ -64,6 +65,7 @@ public class UsuarioDao implements AdministradorConexiones, Dao<Usuario, Integer
             PreparedStatement pst = conn.prepareStatement(SQL_EXISTE_NOMBRE_O_CORREO);
             pst.setString(1, nombre);
             pst.setString(2, correo);
+
             ResultSet rs = pst.executeQuery();
 
             if (rs.next()) {

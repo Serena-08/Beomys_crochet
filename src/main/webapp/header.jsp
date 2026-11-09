@@ -61,8 +61,7 @@
                     href="${pageContext.request.contextPath}/contacto.jsp">Contacto<span class="jp">お問い合わせ</span></a>
                 </li>
 
-                <%-- Solo se muestra con sesión iniciada --%>
-                <c:if test="${not empty sessionScope.usuario}">
+                <c:if test="${sessionScope.usuario.rol == 'ADMIN'}">
                     <li class="nav-item">
                         <a class="nav-link" href="${pageContext.request.contextPath}/productos?accion=nuevo">Agregar producto<span class="jp">商品追加</span></a>
                     </li>
@@ -81,6 +80,7 @@
                 <c:otherwise>
                     <span class="hud"><span class="dot dot--off"></span>Invitado</span>
                     <a class="btn btn-sesion btn-sm" href="${pageContext.request.contextPath}/login">&#9654; Ingresar</a>
+                    <a class="btn btn-sesion btn-sm" href="${pageContext.request.contextPath}/registro">Registrarse</a>
                 </c:otherwise>
             </c:choose>
         </div>

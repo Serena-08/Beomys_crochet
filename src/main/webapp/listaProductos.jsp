@@ -12,7 +12,7 @@
     <div class="d-flex flex-wrap justify-content-between align-items-end gap-3 mb-5">
         <h1 class="titulo-seccion">Productos</h1>
 
-        <c:if test="${not empty sessionScope.usuario}">
+        <c:if test="${sessionScope.usuario.rol == 'ADMIN'}">
             <a href="${pageContext.request.contextPath}/productos?accion=nuevo" class="btn btn-frambuesa">Agregar producto</a>
         </c:if>
     </div>
@@ -35,7 +35,7 @@
                         <div class="mt-auto">
                             <a href="${pro.urlML}" target="_blank" rel="noopener" class="btn btn-frambuesa w-100">Ver en Mercado Libre</a>
 
-                            <c:if test="${not empty sessionScope.usuario}">
+                            <c:if test="${sessionScope.usuario.rol == 'ADMIN'}">
                                 <div class="d-flex gap-2 mt-2">
                                     <a href="${pageContext.request.contextPath}/productos?accion=editar&idProducto=${pro.idProducto}"
                                        class="btn btn-contorno btn-sm flex-fill">Editar</a>

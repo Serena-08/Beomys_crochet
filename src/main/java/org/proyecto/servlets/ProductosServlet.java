@@ -7,6 +7,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.proyecto.dao.ProductoDao;
 import org.proyecto.entities.Producto;
+import jakarta.servlet.http.HttpSession;
+import org.proyecto.entities.Usuario;
+import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,14 +25,18 @@ public class ProductosServlet extends HttpServlet {
     }
 
     @Override
-    public void doGet(HttpServletRequest req, HttpServletResponse res) {
-
+    public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
         //Get devuelve la lista de todos los empleados pasando atributo
         String accion = req.getParameter("accion");
         if (accion == null) {
             accion = "listar";
         }
 
+        //abren el alta/edición o modifican datos, solo para administradores
+        boolean soloAdmin = accion.equals("nuevo") || accion.equals("editar") || accion.equals("borrar");
+        if (soloAdmin && !tienePermiso(req, res)) {
+            return;
+        }
 
         RequestDispatcher rd = null;
         switch (accion) {
@@ -92,7 +99,12 @@ public class ProductosServlet extends HttpServlet {
     }
 
     @Override
-    public void doPost(HttpServletRequest req, HttpServletResponse res) {
+    public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException {
+        req.setCharacterEncoding("UTF-8"); // antes de leer los parámetros, para que no se rompan las tildes
+
+        if (!tienePermiso(req, res)) {
+            return;
+        }
         //Se encarga de guardar uno nuevo o actualizar uno existente
         String strIdProducto = req.getParameter("txtIdProducto");
         String strNombre = req.getParameter("txtNombre");
@@ -134,6 +146,23 @@ public class ProductosServlet extends HttpServlet {
         } catch (Exception e) {
             System.out.println("No se pudo redirigir al index");
         }
+    }
+
+    // Devuelve true si quien hace el pedido es un administrador.
+// Si no hay sesión lo manda al login; si no es admin responde 403 (prohibido).
+    private boolean tienePermiso(HttpServletRequest req, HttpServletResponse res) throws IOException {
+        HttpSession sesion = req.getSession(false);
+        Usuario usuario = (sesion == null) ? null : (Usuario) sesion.getAttribute("usuario");
+
+        if (usuario == null) {
+            res.sendRedirect(req.getContextPath() + "/login");
+            return false;
+        }
+        if (!"ADMIN".equals(usuario.getRol())) {
+            res.sendError(HttpServletResponse.SC_FORBIDDEN, "Solo los administradores pueden hacer esto");
+            return false;
+        }
+        return true;
     }
 
 }
