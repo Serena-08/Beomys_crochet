@@ -96,11 +96,10 @@ INSERT INTO categorias (idCategoria, categoria) VALUES
     (4, 'Fundas y muñecos'),
     (5, 'Para bebés');
 
--- Por ahora las claves están en texto plano (el login actual las compara así).
--- Cuando se agregue el hash con BCrypt, se reemplazan por los hashes.
+-- Las claves se guardan con hash BCrypt. Usuarios de prueba: admin / admin y cliente / cliente
 INSERT INTO usuarios (idUsuario, nombre, apellido, correo, clave, idRol) VALUES
-    (1, 'admin',   'Administrador', 'admin@beomys.com',   'admin',   1),
-    (2, 'cliente', 'Demo',          'cliente@beomys.com', 'cliente', 2);
+    (1, 'admin',   'Administrador', 'admin@beomys.com',   '$2a$10$2zVZGVZAo49PUk8NdyQP2.wE15zjJU8j1FaZn5vFDIuazXJqS4/qe', 1),
+    (2, 'cliente', 'Demo',          'cliente@beomys.com', '$2a$10$ehPCejq7tKzP7GOItB966.jTEpPZkPFym7Ajkoyjuhg.0zerFFEEG', 2);
 
 INSERT INTO productos (nombre, precio, descripcion, urlImagen, urlML, idCategoria) VALUES
     ('Ranas', 2500.00, 'Hecho a mano en crochet.', 'https://drive.google.com/thumbnail?id=1ltdpg0HYkX9IpT8-CBqeXS1itAEDXXlK&sz=w1000', '', 1),

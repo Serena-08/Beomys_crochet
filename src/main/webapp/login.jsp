@@ -23,6 +23,10 @@
                 <p class="login__jp">ログイン</p>
             </div>
 
+            <c:if test="${param.registro == 'ok'}">
+                <div class="alert alert-success" role="alert">Cuenta creada. Ya podés iniciar sesión.</div>
+            </c:if>
+
             <form method = "POST" action = "login" class="px-4 py-3">
                 <div class="mb-3">
                     <label for="txtNombre" class="form-label">Nombre de Usuario</label>
@@ -36,6 +40,11 @@
                 </div>
                 <button type="submit" class="btn btn-frambuesa w-100">Enviar</button>
             </form>
+
+            <p class="text-center mt-3 mb-0">
+                ¿No tenés cuenta?
+                <a href="${pageContext.request.contextPath}/registro" style="color: var(--menta);">Crear cuenta</a>
+            </p>
 
         </div>
     </div>

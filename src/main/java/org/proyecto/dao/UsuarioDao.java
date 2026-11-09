@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import org.proyecto.util.Seguridad;
 
 public class UsuarioDao implements AdministradorConexiones, Dao<Usuario, Integer> {
     // Implementación de métodos para interactuar con la base de datos
@@ -17,13 +18,11 @@ public class UsuarioDao implements AdministradorConexiones, Dao<Usuario, Integer
     private final String SQL_GETALL = "SELECT * FROM usuarios";
     private final String SQL_GETBY_ID = "SELECT * FROM usuarios WHERE idUsuario=?";
     private final String SQL_DELETE_BY_ID = "DELETE FROM usuarios WHERE idUsuario=?";
-
-    private final String SQL_INSERT = "INSERT INTO usuarios (nombre, clave)" + " VALUES (?,      ?)";
-
+    private final String SQL_INSERT = "INSERT INTO usuarios (nombre, apellido, correo, clave) VALUES (?, ?, ?, ?)";
     private final String SQL_UPDATE = "UPDATE usuarios SET nombre=?, clave=? WHERE idUsuario=?";
-
     // consulta para el login: busca por nombre y clave
-    private final String SQL_LOGIN = "SELECT * FROM usuarios WHERE nombre=? AND clave=?";
+    private final String SQL_LOGIN = "SELECT * FROM usuarios WHERE nombre=?";
+    private final String SQL_EXISTE_NOMBRE_O_CORREO = "SELECT idUsuario FROM usuarios WHERE nombre=? OR correo=?";
 
     public Usuario getByNombreYClave(String nombre, String clave) {
         Usuario usuario = null;
@@ -32,17 +31,20 @@ public class UsuarioDao implements AdministradorConexiones, Dao<Usuario, Integer
             Connection conn = this.obtenerConexion();
             //2. creo preparedStatement con el string de la consulta
             PreparedStatement pst = conn.prepareStatement(SQL_LOGIN);
-            //3. reemplazar los ? con los valores
+            //3. reemplazar el ? con el nombre (la clave se compara después, con BCrypt)
             pst.setString(1, nombre);
-            pst.setString(2, clave);
             //4. ejecutar
             ResultSet rs = pst.executeQuery();
             // si encontro el usuario el resulset tiene una fila
             if (rs.next()) {
-                usuario = new Usuario();
-                usuario.setIdUsuario(rs.getInt("idUsuario"));
-                usuario.setNombre(rs.getString("nombre"));
-                usuario.setClave(rs.getString("clave"));
+                String hashGuardado = rs.getString("clave");
+                // comparo la clave escrita con el hash guardado en la base
+                if (Seguridad.coincide(clave, hashGuardado)) {
+                    usuario = new Usuario();
+                    usuario.setIdUsuario(rs.getInt("idUsuario"));
+                    usuario.setNombre(rs.getString("nombre"));
+                    // la clave no se copia al objeto, así no queda guardada en la sesión
+                }
             }
             // cierro
             rs.close();
@@ -53,6 +55,30 @@ public class UsuarioDao implements AdministradorConexiones, Dao<Usuario, Integer
             throw new RuntimeException(e);
         }
         return usuario;
+    }
+
+    public boolean existeNombreOCorreo(String nombre, String correo) {
+        boolean existe = false;
+        try {
+            Connection conn = this.obtenerConexion();
+            PreparedStatement pst = conn.prepareStatement(SQL_EXISTE_NOMBRE_O_CORREO);
+            pst.setString(1, nombre);
+            pst.setString(2, correo);
+            ResultSet rs = pst.executeQuery();
+
+            if (rs.next()) {
+                existe = true;
+            }
+
+            //cierro
+            rs.close();
+            pst.close();
+            conn.close();
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return existe;
     }
 
     @Override
@@ -114,7 +140,9 @@ public class UsuarioDao implements AdministradorConexiones, Dao<Usuario, Integer
             Connection conn = this.obtenerConexion();
             PreparedStatement pst = conn.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS);
             pst.setString(1, objeto.getNombre());
-            pst.setString(2, objeto.getClave());
+            pst.setString(2, objeto.getApellido());
+            pst.setString(3, objeto.getCorreo());
+            pst.setString(4, Seguridad.asegurarHash(objeto.getClave()));
 
             pst.execute();
 
@@ -139,7 +167,7 @@ public class UsuarioDao implements AdministradorConexiones, Dao<Usuario, Integer
             Connection conn = this.obtenerConexion();
             PreparedStatement pst = conn.prepareStatement(SQL_UPDATE);
             pst.setString(1, objeto.getNombre());
-            pst.setString(2, objeto.getClave());
+            pst.setString(2, Seguridad.asegurarHash(objeto.getClave()));
             pst.setInt(3, objeto.getIdUsuario());
             // ejecuto
             pst.executeUpdate();
