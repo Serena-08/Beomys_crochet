@@ -11,10 +11,10 @@ import java.util.List;
 public class CategoriaDao implements AdministradorConexiones, Dao<Categoria, Integer> {
 
     private final String SQL_GETALL = "SELECT * FROM categorias";
-    private final String SQL_GETBY_ID = "SELECT * FROM categorias WHERE idCategoria=?";
-    private final String SQL_DELETE_BY_ID = "DELETE FROM categorias WHERE idCategoria=?";
+    private final String SQL_GETBY_ID = "SELECT * FROM categorias WHERE IdCategoria=?";
+    private final String SQL_DELETE_BY_ID = "DELETE FROM categorias WHERE IdCategoria=?";
     private final String SQL_INSERT = "INSERT INTO categorias (categoria) VALUES (?)";
-    private final String SQL_UPDATE = "UPDATE categorias SET categoria=? WHERE idCategoria=?";
+    private final String SQL_UPDATE = "UPDATE categorias SET categoria=? WHERE IdCategoria=?";
 
     @Override
     public List<Categoria> getAll() {
@@ -27,7 +27,7 @@ public class CategoriaDao implements AdministradorConexiones, Dao<Categoria, Int
 
             while(rs.next()) {
                 Categoria categoria = new Categoria();
-                categoria.setIdCateogria(rs.getInt("idCategoria"));
+                categoria.setIdCategoria(rs.getInt("IdCategoria"));
                 categoria.setCategoria(rs.getString("categoria"));
 
                 lista.add(categoria);
@@ -52,7 +52,7 @@ public class CategoriaDao implements AdministradorConexiones, Dao<Categoria, Int
             ResultSet rs = pst.executeQuery();
             Categoria categoria = new Categoria();
             if(rs.next()) {
-                categoria.setIdCateogria(rs.getInt("idCategoria"));
+                categoria.setIdCategoria(rs.getInt("IdCategoria"));
                 categoria.setCategoria(rs.getString("categoria"));
             }
             //cierro
@@ -93,7 +93,7 @@ public class CategoriaDao implements AdministradorConexiones, Dao<Categoria, Int
             Connection conn = this.obtenerConexion();
             PreparedStatement pst = conn.prepareStatement(SQL_UPDATE);
             pst.setString(1, objeto.getCategoria());
-            pst.setInt(2, objeto.getIdCateogria());
+            pst.setInt(2, objeto.getIdCategoria());
 
             pst.executeUpdate();
 

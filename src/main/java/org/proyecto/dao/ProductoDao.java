@@ -10,7 +10,9 @@ import java.util.List;
 
 public class    ProductoDao implements AdministradorConexiones, Dao<Producto, Integer> {
 
-    private final String SQL_GETALL = "SELECT * FROM productos ORDER BY 1 DESC";
+    private final String SQL_GETALL = "SELECT p.*, c.categoria AS nombreCategoria "
+            + "FROM productos p LEFT JOIN categorias c ON c.idCategoria = p.idCategoria "
+            + "ORDER BY p.idProducto DESC";
     private final String SQL_GETBY_CATEGORIA = "SELECT * FROM productos WHERE idCategoria=?";
 
     private final String SQL_GETBY_ID = "SELECT * FROM productos WHERE idProducto=?";
@@ -36,6 +38,8 @@ public class    ProductoDao implements AdministradorConexiones, Dao<Producto, In
                 producto.setDescripcion(rs.getString("descripcion"));
                 producto.setUrlImagen(rs.getString("urlImagen"));
                 producto.setUrlML(rs.getString("urlML"));
+                producto.getCategoria().setIdCategoria(rs.getInt("idCategoria"));
+                producto.getCategoria().setCategoria(rs.getString("nombreCategoria")); // null si no tiene categoría
 
                 lista.add(producto);
             }

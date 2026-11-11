@@ -61,9 +61,20 @@
                     href="${pageContext.request.contextPath}/contacto.jsp">Contacto<span class="jp">お問い合わせ</span></a>
                 </li>
 
+                <%-- Solo se muestra para administradores --%>
                 <c:if test="${sessionScope.usuario.rol == 'ADMIN'}">
                     <li class="nav-item">
                         <a class="nav-link" href="${pageContext.request.contextPath}/productos?accion=nuevo">Agregar producto<span class="jp">商品追加</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link ${param.activa == 'categorias' ? 'active' : ''}"
+                           ${param.activa == 'categorias' ? 'aria-current="page"' : ''}
+                        href="${pageContext.request.contextPath}/categorias">Categorías<span class="jp">分類</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link ${param.activa == 'usuarios' ? 'active' : ''}"
+                           ${param.activa == 'usuarios' ? 'aria-current="page"' : ''}
+                        href="${pageContext.request.contextPath}/usuarios">Usuarios<span class="jp">ユーザー</span></a>
                     </li>
                 </c:if>
             </ul>

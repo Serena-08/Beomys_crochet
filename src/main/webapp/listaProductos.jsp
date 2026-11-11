@@ -29,6 +29,9 @@
                     </div>
 
                     <div class="d-flex flex-column flex-grow-1 p-3">
+
+                        <span class="producto__cat"><c:out value="${empty pro.categoria.categoria ? 'Sin categoría' : pro.categoria.categoria}"/></span>
+
                         <h2 class="producto__nombre">${pro.nombre}</h2>
                         <p class="producto__desc">${pro.descripcion}</p>
 

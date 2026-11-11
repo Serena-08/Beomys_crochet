@@ -505,4 +505,26 @@
     }
     .form-pantalla .btn-frambuesa { box-shadow: 4px 4px 0 var(--menta); }
     .form-pantalla .btn-contorno { box-shadow: 4px 4px 0 var(--frambuesa); }
+
+        /* =====================================================
+       TABLAS DE ADMINISTRACIÓN (categorías)
+       ===================================================== */
+    .panel-tabla {
+        background: #fff;
+        color: var(--ciruela);
+        border: 3px solid var(--ciruela);
+        border-radius: 6px;
+        box-shadow: 5px 5px 0 var(--ciruela);
+        overflow: hidden;
+    }
+    .panel-tabla .table { margin-bottom: 0; }
+    .panel-tabla .table thead th {
+        background: var(--ciruela);
+        color: var(--menta);
+        font-family: "Orbitron", sans-serif;
+        font-size: .75rem;
+        letter-spacing: .12em;
+        text-transform: uppercase;
+        border: 0;
+    }
 </style>

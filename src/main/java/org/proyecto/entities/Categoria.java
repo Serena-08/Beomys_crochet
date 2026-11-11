@@ -1,14 +1,22 @@
 package org.proyecto.entities;
 
 public class Categoria {
-    private int idCateogria;
+    private int idCategoria;
     private String categoria;
 
     public Categoria(){}
 
-    public Categoria(int idCateogria, String categoria) {
-        this.idCateogria = idCateogria;
+    public Categoria(int idCategoria, String categoria) {
+        this.idCategoria = idCategoria;
         this.categoria = categoria;
+    }
+
+    public int getIdCategoria() {
+        return idCategoria;
+    }
+
+    public void setIdCategoria(int idCategoria) {
+        this.idCategoria = idCategoria;
     }
 
     public String getCategoria() {
@@ -19,18 +27,10 @@ public class Categoria {
         this.categoria = categoria;
     }
 
-    public int getIdCateogria() {
-        return idCateogria;
-    }
-
-    public void setIdCateogria(int idCateogria) {
-        this.idCateogria = idCateogria;
-    }
-
     @Override
     public String toString() {
         return "Categoria{" +
-                "idCateogria=" + idCateogria +
+                "idCategoria=" + idCategoria +
                 ", categoria='" + categoria + '\'' +
                 '}';
     }
