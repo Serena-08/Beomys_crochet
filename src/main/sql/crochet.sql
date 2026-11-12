@@ -101,6 +101,7 @@ INSERT INTO categorias (idCategoria, categoria) VALUES
 INSERT INTO usuarios (idUsuario, nombre, apellido, correo, clave, idRol) VALUES
     (1, 'admin',   'Administrador', 'admin@beomys.com',   '$2a$10$2zVZGVZAo49PUk8NdyQP2.wE15zjJU8j1FaZn5vFDIuazXJqS4/qe', 1),
     (2, 'cliente', 'Demo',          'cliente@beomys.com', '$2a$10$ehPCejq7tKzP7GOItB966.jTEpPZkPFym7Ajkoyjuhg.0zerFFEEG', 2);
+
 INSERT INTO productos (nombre, precio, descripcion, urlImagen, urlML, idCategoria) VALUES
     ('Ranas', 3000.00, 'Pequeñas ranas tejidas a crochet, ideales para compartir, llevar en la mochila o regalar.', 'https://drive.google.com/thumbnail?id=1ltdpg0HYkX9IpT8-CBqeXS1itAEDXXlK&sz=w1000', '', 1),
     ('Pulpitos', 1500.00, 'Pulpitos reversibles o de apego tejidos en hilo de algodón hipoalergénico.', 'https://drive.google.com/thumbnail?id=1g3HJFIEXF-cuZbtKyZIHn4_xpjEnZuPB&sz=w1000', '', 1),
@@ -129,7 +130,7 @@ INSERT INTO productos (nombre, precio, descripcion, urlImagen, urlML, idCategori
     ('Coraline', 11000.00, 'Muñeca de Coraline amigurumi, detallada con su clásico piloto amarillo y pelo azul.', 'https://drive.google.com/thumbnail?id=15nteFcs3I-01oQ7uSA9rQkOFoW0DTbmr&sz=w1000', '', 4),
     ('Goku y Milk', 7500.00, 'Set de Goku y Milk tejidos a crochet. El adorno o regalo de bodas perfecto para fans del anime.', 'https://drive.google.com/thumbnail?id=1sSfbkZkoSmP56qJnOO8X0kjtf0wmJsrK&sz=w1000', '', 1),
     ('Army Bomb', 4000.00, 'Lightstick Army Bomb de BTS versión amigurumi. Un detalle tierno para cualquier ARMY.', 'https://drive.google.com/thumbnail?id=1pXTRT0Ih6T_qyfnX5EmBvW7fghBD6gfF&sz=w1000', '', 1),
-    ('Pareja Crochet', 15000.00, 'Muñecos de pareja personalizados tejidos a crochet, para recordar momentos especiales.', 'https://drive.google.com/thumbnail?id=1iSTAUdJBgHScDah-F20_nT6N5AMxA_36&sz=w1000', '', 1),
+    ('Pareja Gatitos Aliens', 5000.00, 'Muñecos de pareja de Gatos Aliens tejidos a crochet, para recordar momentos especiales.', 'https://drive.google.com/thumbnail?id=1iSTAUdJBgHScDah-F20_nT6N5AMxA_36&sz=w1000', '', 1),
     ('Regalo para graduación', 4000.00, 'Muñeco amigurumi con birrete y diploma. El recuerdo ideal para celebrar un egreso.', 'https://drive.google.com/thumbnail?id=1huCICDsz7peypTK07nO6aOXDmyJoLl6-&sz=w1000', '', 1);
 
 INSERT INTO pedidos (idPedido, estado, fechaPedido, idUsuario) VALUES
