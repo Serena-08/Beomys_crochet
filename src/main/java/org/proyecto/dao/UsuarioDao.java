@@ -30,13 +30,11 @@ public class UsuarioDao implements AdministradorConexiones, Dao<Usuario, Integer
     public Usuario getByNombreYClave(String nombre, String clave) {
         Usuario usuario = null;
         try {
-            //1. conectar
             Connection conn = this.obtenerConexion();
             //2. creo preparedStatement con el string de la consulta
             PreparedStatement pst = conn.prepareStatement(SQL_LOGIN);
             //3. reemplazar el ? con el nombre (la clave se compara después, con BCrypt)
             pst.setString(1, nombre);
-            //4. ejecutar
             ResultSet rs = pst.executeQuery();
             // si encontro el usuario el resulset tiene una fila
             if (rs.next()) {

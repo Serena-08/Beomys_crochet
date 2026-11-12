@@ -90,11 +90,12 @@ INSERT INTO roles (idRol, nombre) VALUES
     (2, 'CLIENTE');
 
 INSERT INTO categorias (idCategoria, categoria) VALUES
-    (1, 'Amigurumis'),
-    (2, 'Accesorios'),
-    (3, 'Personajes'),
-    (4, 'Fundas y muñecos'),
-    (5, 'Para bebés');
+    (1, 'Llaveros'),
+    (2, 'Amigurumis'),
+    (3, 'Accesorios'),
+    (4, 'Fundas'),
+    (5, 'Para bebés'),
+    (7, 'Flores');
 
 -- Las claves se guardan con hash BCrypt. Usuarios de prueba: admin / admin y cliente / cliente
 INSERT INTO usuarios (idUsuario, nombre, apellido, correo, clave, idRol) VALUES

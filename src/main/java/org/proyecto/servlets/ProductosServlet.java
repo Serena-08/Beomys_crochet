@@ -57,7 +57,7 @@ public class ProductosServlet extends HttpServlet {
                 }
                 break;
             case "nuevo":
-                rd = req.getRequestDispatcher("formulario-Productos.jsp");
+                rd = req.getRequestDispatcher("formulario-productos.jsp");
                 try {
                     rd.forward(req, res); //redirijo a formulario-producto.jsp
                 } catch (Exception e) {
@@ -75,7 +75,7 @@ public class ProductosServlet extends HttpServlet {
                 req.setAttribute("producto", productoEditar);
 
                 try {
-                    rd = req.getRequestDispatcher("formulario-Productos.jsp"); //Pasa la peticion a otra pagina dentro del servidor
+                    rd = req.getRequestDispatcher("formulario-productos.jsp"); //Pasa la peticion a otra pagina dentro del servidor
                     rd.forward(req, res); //redirijo a formulario-producto.jsp
                 } catch (Exception e) {
                     System.out.println(e.getMessage() + " " + e.getCause());
@@ -140,7 +140,7 @@ public class ProductosServlet extends HttpServlet {
             productoDao.update(producto);
         }
 
-        RequestDispatcher rd = req.getRequestDispatcher("index.jsp");
+        RequestDispatcher rd = req.getRequestDispatcher("listaProductos.jsp");
         try {
             rd.forward(req, res);
         } catch (Exception e) {

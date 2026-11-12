@@ -69,7 +69,7 @@
 </div>
 
 <script>
-    // Vacía todos los campos de texto y número (funciona al crear y al editar).
+    // Vacía todos los campos de texto y número
     // No toca el id oculto, así que al editar se sigue actualizando el mismo producto.
     function limpiarFormulario(form) {
         form.querySelectorAll('input[type="text"], input[type="number"]').forEach(function (campo) {
