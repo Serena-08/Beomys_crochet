@@ -527,4 +527,76 @@
         text-transform: uppercase;
         border: 0;
     }
+    /* =====================================================
+   PÁGINA DE CONSTRUCCIÓN / CONTACTO
+   ===================================================== */
+.pantalla-construccion {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+}
+
+.tarjeta-arcade {
+    max-width: 540px;
+    width: 100%;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    position: relative;
+}
+
+.badge-nivel {
+    display: inline-block;
+    background: var(--manteca);
+    color: var(--ciruela);
+    font-family: "Press Start 2P", monospace;
+    font-size: 0.65rem;
+    padding: 0.4rem 0.7rem;
+    border: 2px solid var(--ciruela);
+    box-shadow: 3px 3px 0 var(--frambuesa);
+    margin-bottom: 1.2rem;
+}
+
+.barra-carga {
+    width: 100%;
+    height: 22px;
+    background-color: var(--ciruela);
+    border: 2px solid var(--menta);
+    padding: 3px;
+    margin: 1.5rem 0;
+    box-shadow: 0 0 12px rgba(0, 229, 255, 0.3);
+}
+
+.barra-progreso {
+    height: 100%;
+    width: 65%;
+    background: repeating-linear-gradient(
+        45deg,
+        var(--frambuesa),
+        var(--frambuesa) 10px,
+        var(--manteca) 10px,
+        var(--manteca) 20px
+    );
+    animation: cargar-terreno 2.5s ease-in-out infinite alternate;
+}
+
+@keyframes cargar-terreno {
+    0% { width: 25%; }
+    100% { width: 85%; }
+}
+
+.texto-terminal {
+    font-family: "Rajdhani", sans-serif;
+    font-size: 1.15rem;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.5;
+}
+
+.cursor-blink::after {
+    content: "_";
+    color: var(--lima);
+    font-weight: bold;
+    animation: pie-cursor 1s steps(1) infinite;
+}
 </style>
