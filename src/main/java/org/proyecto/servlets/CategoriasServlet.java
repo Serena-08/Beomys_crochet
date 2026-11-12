@@ -23,7 +23,7 @@ public class CategoriasServlet extends HttpServlet {
         categoriaDao = new CategoriaDao();
     }
 
-    // Mismo control de permisos que ProductosServlet (el día 5 se unifican en una sola clase)
+    // Mismo control de permisos que ProductosServlet
     private boolean tienePermiso(HttpServletRequest req, HttpServletResponse res) throws IOException {
         HttpSession sesion = req.getSession(false);
         Usuario usuario = (sesion == null) ? null : (Usuario) sesion.getAttribute("usuario");

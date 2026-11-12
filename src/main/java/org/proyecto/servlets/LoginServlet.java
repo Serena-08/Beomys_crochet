@@ -72,7 +72,7 @@ public class LoginServlet extends HttpServlet {
             sesion.setAttribute("usuario", usuario);
             sesion.setAttribute("mensaje", "Logueo exitoso");
             sesion.setAttribute("nombre", usuario.getNombre());
-            sesion.setMaxInactiveInterval(5 * 60); //5 minutos
+            sesion.setMaxInactiveInterval(25 * 60); // 25 minutos
             rd = req.getRequestDispatcher("index.jsp");
         } else {
             rd = req.getRequestDispatcher("login.jsp");
@@ -84,12 +84,5 @@ public class LoginServlet extends HttpServlet {
 
         }
     }
-
-
 }
-
-
-
-
-
 

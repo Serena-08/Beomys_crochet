@@ -10,11 +10,10 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.proyecto.util.Seguridad;
 
 public class UsuarioDao implements AdministradorConexiones, Dao<Usuario, Integer> {
-    // Implementación de métodos para interactuar con la base de datos
-
     private final String SQL_GETALL = "SELECT * FROM usuarios";
     private final String SQL_GETBY_ID = "SELECT * FROM usuarios WHERE idUsuario=?";
     private final String SQL_DELETE_BY_ID = "DELETE FROM usuarios WHERE idUsuario=?";
@@ -39,7 +38,7 @@ public class UsuarioDao implements AdministradorConexiones, Dao<Usuario, Integer
             // si encontro el usuario el resulset tiene una fila
             if (rs.next()) {
                 String hashGuardado = rs.getString("clave");
-                // comparo la clave escrita con el hash guardado en la base
+                // comparo la clave escrita con el hash guardado
                 if (Seguridad.coincide(clave, hashGuardado)) {
                     usuario = new Usuario();
                     usuario.setIdUsuario(rs.getInt("idUsuario"));
@@ -290,7 +289,7 @@ public class UsuarioDao implements AdministradorConexiones, Dao<Usuario, Integer
         return tiene;
     }
 
-    // true si OTRO usuario (distinto al indicado) ya usa ese nombre o ese correo.
+    // true si OTRO usuario distinto al indicado ya usa ese nombre o ese correo.
 // Para un usuario nuevo se pasa id 0.
     public boolean existeNombreOCorreoDeOtro(String nombre, String correo, int idUsuario) {
         boolean existe = false;

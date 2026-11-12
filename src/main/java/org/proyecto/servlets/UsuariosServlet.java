@@ -32,7 +32,6 @@ public class UsuariosServlet extends HttpServlet {
         return (sesion == null) ? null : (Usuario) sesion.getAttribute("usuario");
     }
 
-    // Mismo control de permisos que los otros servlets (el día 5 se unifican en una sola clase)
     private boolean tienePermiso(HttpServletRequest req, HttpServletResponse res) throws IOException {
         Usuario usuario = usuarioLogueado(req);
 
@@ -71,7 +70,6 @@ public class UsuariosServlet extends HttpServlet {
         return null;
     }
 
-    // Muestra la lista de usuarios, con un mensaje de error opcional
     private void mostrarLista(HttpServletRequest req, HttpServletResponse res, String error)
             throws ServletException, IOException {
         req.setAttribute("lista", usuarioDao.getAllConRol());
@@ -141,7 +139,6 @@ public class UsuariosServlet extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
 
-        // Antes de leer los parámetros, para que no se rompan las tildes
         req.setCharacterEncoding("UTF-8");
 
         if (!tienePermiso(req, res)) {

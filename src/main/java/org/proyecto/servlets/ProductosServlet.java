@@ -140,9 +140,8 @@ public class ProductosServlet extends HttpServlet {
             productoDao.update(producto);
         }
 
-        RequestDispatcher rd = req.getRequestDispatcher("listaProductos.jsp");
         try {
-            rd.forward(req, res);
+            res.sendRedirect(req.getContextPath() + "/productos");
         } catch (Exception e) {
             System.out.println("No se pudo redirigir al index");
         }
